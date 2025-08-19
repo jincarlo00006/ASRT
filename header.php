@@ -53,9 +53,31 @@ if (isset($_SESSION['register_error'])) {
 
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
-<nav class="navbar navbar-expand-lg navbar-light bg-light px-lg-3 py-lg-2 shadow-sm sticky-top">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<!-- Ensure FontAwesome is loaded before any icons are used -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  .navbar, .navbar * {
+    font-family: 'Inter', 'Segoe UI', 'Roboto', Arial, sans-serif !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.01em;
+  }
+  /* Do NOT apply custom font to FontAwesome icons */
+  .navbar i.fa,
+  .navbar i[class^='fa-'],
+  .navbar i[class*=' fa-'] {
+    font-family: var(--fa-style-family, 'Font Awesome 6 Free') !important;
+    font-weight: var(--fa-style, 900) !important;
+    letter-spacing: normal !important;
+    color: #000 !important;
+  }
+  .navbar .nav-link, .navbar .navbar-brand {
+    font-weight: 400 !important;
+  }
+</style>
+<nav id="mainNavbar" class="navbar navbar-expand-lg navbar-light bg-light px-lg-3 py-lg-2 shadow-sm sticky-top" style="transition: top 0.3s;">
   <div class="container-fluid">
-    <a class="navbar-brand fw-bold fs-3 h-font" href="index.php">
+    <a class="navbar-brand fs-3 h-font" href="index.php" style="font-weight:400 !important;">
       ASRT Commercial
     </a>
     <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
@@ -69,13 +91,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link me-2 text-primary fw-bold handyman-glow <?= $current_page == 'handyman_type.php' ? 'active shadow border border-primary bg-white' : '' ?>" href="handyman_type.php">
-            <i class="fa-solid fa-helmet-safety me-1"></i> Handyman
+          <a class="nav-link me-2 handyman-glow text-black <?= $current_page == 'handyman_type.php' ? 'active shadow border border-primary bg-white' : '' ?>" href="handyman_type.php" style="font-weight:400 !important;">
+            <i class="fa-solid fa-helmet-safety me-1 text-primary"></i> Handyman
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link me-2 text-success fw-bold <?= $current_page == 'invoice_history.php' ? 'active shadow border border-success bg-white' : '' ?>" href="invoice_history.php" style="position: relative;">
-            <i class="fa-solid fa-money-bill-wave me-1"></i> Invoice
+          <a class="nav-link me-2 text-black <?= $current_page == 'invoice_history.php' ? 'active shadow border border-success bg-white' : '' ?>" href="invoice_history.php" style="position: relative; font-weight:400 !important;">
+            <i class="fa-solid fa-money-bill-wave me-1 text-success"></i> Invoice
             <?php if ($invoice_alert_count > 0): ?>
               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem;">
                 <?= $invoice_alert_count ?>
@@ -85,13 +107,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link me-2 text-warning fw-bold maintenance-glow <?= $current_page == 'maintenance.php' ? 'active shadow border border-warning bg-white' : '' ?>" href="maintenance.php">
-            <i class="fa-solid fa-screwdriver-wrench me-1"></i> Maintenance
+          <a class="nav-link me-2 maintenance-glow text-black <?= $current_page == 'maintenance.php' ? 'active shadow border border-warning bg-white' : '' ?>" href="maintenance.php" style="font-weight:400 !important;">
+            <i class="fa-solid fa-screwdriver-wrench me-1 text-warning"></i> Maintenance
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link me-2 text-secondary fw-bold about-glow <?= $current_page == 'about.php' ? 'active shadow border border-secondary bg-white' : '' ?>" href="about.php">
-            <i class="fa-solid fa-circle-info me-1"></i> About
+          <a class="nav-link me-2 about-glow text-black <?= $current_page == 'about.php' ? 'active shadow border border-secondary bg-white' : '' ?>" href="about.php" style="font-weight:400 !important;">
+            <i class="fa-solid fa-circle-info me-1 text-secondary"></i> About
           </a>
         </li>
       </ul>
@@ -234,10 +256,23 @@ $current_page = basename($_SERVER['PHP_SELF']);
   </div>
 </div>
 
-<!-- FontAwesome CDN for eye icon -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 
 <script>
+// Hide navbar on scroll down, show on scroll up
+let lastScrollTop = 0;
+const navbar = document.getElementById('mainNavbar');
+window.addEventListener('scroll', function() {
+  let st = window.pageYOffset || document.documentElement.scrollTop;
+  if (st > lastScrollTop && st > 80) {
+    // Scroll down
+    navbar.style.top = '-100px';
+  } else {
+    // Scroll up
+    navbar.style.top = '0';
+  }
+  lastScrollTop = st <= 0 ? 0 : st;
+});
 function togglePassword(inputId, iconSpan) {
   var input = document.getElementById(inputId);
   var icon = iconSpan.querySelector('i');

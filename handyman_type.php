@@ -22,9 +22,30 @@ $icon_map = [
 <head>
     <title>Handyman Types</title>
     <?php require('links.php'); ?>
+    <style>
+    .sticky-back-btn {
+        position: fixed;
+        top: 80px;
+        right: 30px;
+        z-index: 1050;
+    }
+    @media (max-width: 576px) {
+        .sticky-back-btn {
+            top: 50px !important;
+            right: 10px !important;
+        }
+    }
+    </style>
 </head>
 <body>
 <?php require('header.php'); ?>
+<?php if ($is_logged_in && isset($_SESSION['C_username'])): ?>
+    <div class="sticky-back-btn">
+        <a href="dashboard.php" class="btn btn-primary shadow fw-bold">
+            <i class="bi bi-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+<?php endif; ?>
 <div class="container my-5">
     <h2 class="mb-4 text-center fw-bold h-font">Choose the worker for your problem</h2>
     <?php if(!$is_logged_in): ?>

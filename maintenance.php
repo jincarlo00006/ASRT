@@ -64,10 +64,29 @@ if ($is_logged_in) {
     <?php require('links.php'); ?>
     <style>
         .pending-info { color: #c0392b; font-size: 0.95em; }
+        .sticky-back-btn {
+            position: fixed;
+            top: 80px;
+            right: 30px;
+            z-index: 1050;
+        }
+        @media (max-width: 576px) {
+            .sticky-back-btn {
+                top: 50px !important;
+                right: 10px !important;
+            }
+        }
     </style>
 </head>
 <body>
 <?php require('header.php'); ?>
+<?php if ($is_logged_in): ?>
+    <div class="sticky-back-btn">
+        <a href="dashboard.php" class="btn btn-primary shadow fw-bold">
+            <i class="bi bi-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+<?php endif; ?>
 <div class="container my-5">
     <?php if ($is_logged_in): ?>
         <h2 class="fw-bold text-center mb-4">Maintenance</h2>

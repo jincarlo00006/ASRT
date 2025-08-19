@@ -99,7 +99,7 @@ function timeAgo($datetime) {
             font-size: 1.8rem;
             font-weight: 700;
             margin-bottom: 25px;
-            color: #0ef;
+            color: #fff;
         }
         .card {
             border: none;
@@ -164,6 +164,18 @@ function timeAgo($datetime) {
         .opacity-50 {
             opacity: 0.5;
         }
+        /* Subtle white-gray glow for dashboard cards */
+        .dashboard-glow {
+            background: #23272b !important;
+            color: #fff !important;
+            box-shadow: 0 2px 24px 0 rgba(255,255,255,0.13), 0 1.5px 8px 0 rgba(180,180,180,0.18);
+            border: 1px solid #2c3136;
+        }
+        .dashboard-glow .card-header {
+            background: transparent !important;
+            color: #fff !important;
+            border-bottom: 1px solid #2c3136 !important;
+        }
     </style>
 </head>
 <body>
@@ -197,7 +209,7 @@ function timeAgo($datetime) {
         <!-- KPI Cards Section -->
         <div class="row mb-4">
             <div class="col-md-4 mb-3">
-                <div class="card bg-primary text-white">
+                <div class="card dashboard-glow">
                     <div class="card-body">
                         <h5 class="card-title">Pending Rentals</h5>
                         <h2><?= $pending ?></h2>
@@ -205,7 +217,7 @@ function timeAgo($datetime) {
                 </div>
             </div>
             <div class="col-md-4 mb-3">
-                <div class="card bg-warning text-dark">
+                <div class="card dashboard-glow">
                     <div class="card-body">
                         <h5 class="card-title">Pending Maintenance</h5>
                         <h2><?= $pending_maintenance ?></h2>
@@ -213,7 +225,7 @@ function timeAgo($datetime) {
                 </div>
             </div>
             <div class="col-md-4 mb-3">
-                <div class="card bg-info text-dark">
+                <div class="card dashboard-glow">
                     <div class="card-body">
                         <h5 class="card-title">Unpaid Invoices</h5>
                         <h2><?= $unpaid_invoices ?></h2>
@@ -222,7 +234,7 @@ function timeAgo($datetime) {
             </div>
         </div>
         <!-- Latest Rental Requests Table -->
-        <div class="card bg-dark text-white">
+        <div class="card dashboard-glow">
             <div class="card-header">
                 <strong>📄 Latest Rental Requests</strong>
             </div>

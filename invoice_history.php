@@ -92,45 +92,91 @@ $show_kicked_message_in_chat = $is_kicked;
 <head>
     <meta charset="UTF-8">
     <title>Invoice Chat</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
-    <style>
-        body { background: #111; color: #eee; }
-        .chat-container { background: #191919; border-radius: 10px; max-width: 800px; margin: 32px auto; padding: 32px; }
-        .chat-warning {
-            background: #fffae6;
-            color: #856404;
-            border: 1px solid #ffe58f;
-            border-radius: 8px;
-            padding: 12px 18px;
-            text-align: center;
-            margin-bottom: 22px;
-            font-size: 1rem;
-        }
-        .chat-msg { margin-bottom: 24px; }
-        .chat-msg.client { text-align: right; }
-        .chat-msg.admin { text-align: left; }
-        .chat-msg.system { text-align: center; }
-        .chat-msg .msg-bubble {
-            display: inline-block; padding: 12px 20px; border-radius: 18px;
-            max-width: 70%; font-size: 1.1rem;
-        }
-        .chat-msg.admin .msg-bubble { background: #0ef; color: #111; }
-        .chat-msg.client .msg-bubble { background: #252525; color: #eee; border: 1px solid #333; }
-        .chat-msg.system .msg-bubble { background: #ffe082; color: #856404; font-style: italic; border: 1px solid #ffe58f; }
-        .chat-msg .sender { font-size: 0.9rem; opacity: 0.7; margin-top: 2px; }
-        .chat-msg .chat-image { max-width: 220px; max-height: 180px; border-radius: 10px; margin-top: 10px; display: block; margin-left: auto; margin-right: auto;}
-        .chat-meta { font-size: 0.96rem; color: #aaa; margin-bottom: 14px;}
-        .msg-date { font-size: 0.8rem; color: #888; margin-left: 8px; }
-        .chat-form textarea { resize: none; }
-        .invoice-status-badge { font-size: 0.85em; vertical-align: middle; }
-        @media (max-width: 900px) {
-            .chat-container { padding: 10px; }
-            .flex-wrap-mobile { flex-wrap: wrap; }
-        }
-    </style>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+        <style>
+            body { background: #f8f9fa; color: #222; font-family: 'Poppins', Arial, sans-serif; }
+            .chat-container {
+                background: #fff;
+                border-radius: 16px;
+                max-width: 820px;
+                margin: 40px auto;
+                padding: 36px 32px 32px 32px;
+                box-shadow: 0 2px 24px 0 rgba(44,49,54,0.10), 0 1.5px 8px 0 rgba(44,49,54,0.10);
+                border: 1px solid #e0e0e0;
+            }
+            .chat-warning {
+                background: #fff3cd;
+                color: #856404;
+                border: 1px solid #ffeeba;
+                border-radius: 10px;
+                padding: 12px 18px;
+                text-align: center;
+                margin-bottom: 22px;
+                font-size: 1rem;
+            }
+            .chat-meta { font-size: 1.05rem; color: #666; margin-bottom: 18px; }
+            .chat-msg { margin-bottom: 24px; }
+            .chat-msg.client { text-align: right; }
+            .chat-msg.admin { text-align: left; }
+            .chat-msg.system { text-align: center; }
+            .chat-msg .msg-bubble {
+                display: inline-block; padding: 13px 22px; border-radius: 18px;
+                max-width: 70%; font-size: 1.08rem;
+            }
+            .chat-msg.admin .msg-bubble { background: #e3f2fd; color: #1976d2; }
+            .chat-msg.client .msg-bubble { background: #f8f9fa; color: #222; border: 1px solid #e0e0e0; }
+            .chat-msg.system .msg-bubble { background: #ffe082; color: #856404; font-style: italic; border: 1px solid #ffe58f; }
+            .chat-msg .sender { font-size: 0.92rem; opacity: 0.7; margin-top: 2px; }
+            .chat-msg .chat-image { max-width: 220px; max-height: 180px; border-radius: 10px; margin-top: 10px; display: block; margin-left: auto; margin-right: auto;}
+            .msg-date { font-size: 0.8rem; color: #1976d2; margin-left: 8px; }
+            .chat-form textarea, .chat-form input[type="file"], .form-select {
+                background: #fff; color: #222; border: 1px solid #e0e0e0; border-radius: 8px;
+            }
+            .chat-form textarea:focus, .chat-form input[type="file"]:focus, .form-select:focus {
+                border-color: #1976d2; box-shadow: 0 0 0 2px #1976d255;
+            }
+            .chat-form .btn-primary {
+                background: #1976d2; border: none; border-radius: 8px;
+            }
+            .chat-form .btn-primary:hover {
+                background: #1565c0;
+            }
+            .invoice-status-badge { font-size: 0.85em; vertical-align: middle; }
+            .alert-danger, .alert-warning {
+                border-radius: 10px;
+                border: 1px solid #e0e0e0;
+            }
+            .btn-secondary { background: #fff; color: #222; border: 1px solid #e0e0e0; }
+            .btn-secondary:hover { background: #f8f9fa; color: #1976d2; }
+            @media (max-width: 900px) {
+                .chat-container { padding: 10px; }
+                .flex-wrap-mobile { flex-wrap: wrap; }
+            }
+            .sticky-back-btn {
+                position: fixed;
+                top: 80px;
+                right: 30px;
+                z-index: 1050;
+                text-align: right;
+            }
+            @media (max-width: 576px) {
+                .sticky-back-btn {
+                    top: 50px !important;
+                    right: 10px !important;
+                }
+            }
+        </style>
 </head>
 <body>
+<?php require('header.php'); ?>
+<?php if (isset($_SESSION['client_id']) && isset($_SESSION['C_username'])): ?>
+    <div class="sticky-back-btn">
+        <a href="dashboard.php" class="btn btn-primary shadow fw-bold">
+            <i class="bi bi-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+<?php endif; ?>
 <div class="container">
     <div class="chat-container">
         <!-- BEGIN: Chat Policy Notice -->
@@ -242,9 +288,6 @@ $show_kicked_message_in_chat = $is_kicked;
             This invoice is already <b>PAID</b>. You can no longer send messages for this rent period.
         </div>
         <?php endif; ?>
-        <div class="mt-3">
-            <a href="dashboard.php" class="btn btn-secondary btn-sm">&larr; Back to Dashboard</a>
-        </div>
     </div>
 </div>
 </body>

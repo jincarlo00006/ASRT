@@ -94,10 +94,25 @@ $testimonials = $db->getHomepageTestimonials(6);
             cursor: pointer;
             font-size: 30px;
         }
-        #freeMsgBubble:hover {
-            background: #0b5ed7;
-        }
-    </style>
+    #freeMsgBubble:hover {
+      background: #0b5ed7;
+    }
+    /* Overlay for Swiper carousel */
+    .carousel-overlay-box {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 2;
+      pointer-events: none;
+      /* Trapezoid/triangle: left edge vertical, right edge slanted */
+      clip-path: polygon(0 0, 100% 0, 60% 100%, 0% 100%);
+      opacity: 1;
+      transition: opacity 0.5s;
+    }
+  </style>
 </head>
 
 
@@ -105,7 +120,7 @@ $testimonials = $db->getHomepageTestimonials(6);
 <?php if (isset($_GET['free_msg']) && $_GET['free_msg'] === 'sent'): ?>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    Swal.fire({
+    </style>
         icon: 'success',
         title: 'Message Sent!',
         text: 'We\'ll be there for you shortly.',
@@ -156,15 +171,17 @@ document.addEventListener('DOMContentLoaded', function() {
 <?php endif; ?>
 
 <!-- Swiper Carousel -->
-<div class="container-fluid px-lg-4 mt-4">
-    <div class="swiper swiper-container">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="IMG/show/One.jfif" class="w-100 d-block" alt="Slide 1"></div>
-            <div class="swiper-slide"><img src="IMG/show/two.jfif" class="w-100 d-block" alt="Slide 2"></div>
-            <div class="swiper-slide"><img src="IMG/show/three.jfif" class="w-100 d-block" alt="Slide 3"></div>
-        </div>
-        <div class="swiper-pagination"></div>
+<div class="container-fluid px-lg-4 mt-4 position-relative" style="overflow:hidden;">
+  <!-- Overlay Box -->
+  <div class="carousel-overlay-box"></div>
+  <div class="swiper swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="IMG/show/One.jfif" class="w-100 d-block" alt="Slide 1"></div>
+      <div class="swiper-slide"><img src="IMG/show/two.jfif" class="w-100 d-block" alt="Slide 2"></div>
+      <div class="swiper-slide"><img src="IMG/show/three.jfif" class="w-100 d-block" alt="Slide 3"></div>
     </div>
+    <div class="swiper-pagination"></div>
+  </div>
 </div>
 
 <div class="container mt-5">
